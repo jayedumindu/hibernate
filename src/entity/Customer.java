@@ -3,7 +3,9 @@ package entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 public class Customer {
@@ -13,6 +15,8 @@ public class Customer {
     private String cus_name;
     private String cus_address;
     private String cus_contact;
+
+    private Map<Item,Integer> cart = new HashMap<>();
 
     @OneToMany(mappedBy = "customer")
     private List<Order> orders;
@@ -73,6 +77,17 @@ public class Customer {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public void addToCart(Item item, int amount){
+        if(cart.containsKey(item)){
+            cart.put(item,cart.get(item)+amount);
+        }
+        cart.put(item,amount);
+    }
+
+    public void placeOrder(){
+
     }
 
     @Override
