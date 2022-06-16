@@ -5,31 +5,42 @@ import javax.persistence.*;
 @Entity
 public class OrderDetails {
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="order_id")
-    private Order order;
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private int dId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name="order_id")
+    private Reserve order;
+
+    @ManyToOne
     @JoinColumn(name="item_code")
     private Item item;
 
     private int orderQty;
 
+    public int getdId() {
+        return dId;
+    }
+
+    public void setdId(int dId) {
+        this.dId = dId;
+    }
 
     public OrderDetails() {
     }
 
-    public OrderDetails(Order order, Item item, int orderQty) {
+    public OrderDetails(Reserve order, Item item, int orderQty) {
         this.order = order;
         this.item = item;
         this.orderQty = orderQty;
     }
 
-    public Order getOrder() {
+    public Reserve getOrder() {
         return order;
     }
 
-    public void setOrder(Order order) {
+    public void setOrder(Reserve order) {
         this.order = order;
     }
 

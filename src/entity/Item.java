@@ -1,5 +1,6 @@
 package entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -15,7 +16,7 @@ public class Item {
     private double item_price;
     private int qtyOnHand;
 
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<OrderDetails> orderDetails =new ArrayList<>();
 
     public Item() {
@@ -64,6 +65,9 @@ public class Item {
         return qtyOnHand;
     }
 
+    public void setQtyOnHand(int qtyOnHand) {
+        this.qtyOnHand = qtyOnHand;
+    }
 
     public List<OrderDetails> getOrderDetails() {
         return orderDetails;

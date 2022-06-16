@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Order {
+public class Reserve {
 
     @Id
     private String orderId;
@@ -17,29 +17,29 @@ public class Order {
     private Date date;
     private double price;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="customer_id")
     private Customer customer;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderDetails> orderDetails = new ArrayList<>();
 
-    public Order() {
+    public Reserve() {
     }
 
-    public Order(String orderId, Date date, double price, Customer customer) {
+    public Reserve(String orderId, Date date, double price, Customer customer) {
         this.orderId = orderId;
         this.date = date;
         this.price = price;
         this.customer = customer;
     }
 
-    public Order(String orderId, Customer customer) {
+    public Reserve(String orderId, Customer customer) {
         this.orderId = orderId;
         this.customer = customer;
     }
 
-    public Order(String orderId, Date date, double price, Customer customer, List<OrderDetails> orderDetails) {
+    public Reserve(String orderId, Date date, double price, Customer customer, List<OrderDetails> orderDetails) {
         this.orderId = orderId;
         this.date = date;
         this.price = price;

@@ -2,9 +2,8 @@ package entity;
 
 import org.hibernate.Session;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,10 +18,11 @@ public class Customer {
     private String cus_address;
     private String cus_contact;
 
+    @Transient
     private Map<Item,Integer> cart = new HashMap<>();
 
-    @OneToMany(mappedBy = "customer")
-    private List<Order> orders;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<Reserve> orders = new ArrayList<>();
 
     public Customer() {
     }
@@ -34,7 +34,7 @@ public class Customer {
         this.cus_contact = cus_contact;
     }
 
-    public Customer(String cus_id, String cus_name, String cus_address, String cus_contact, List<Order> orders) {
+    public Customer(String cus_id, String cus_name, String cus_address, String cus_contact, List<Reserve> orders) {
         this.cus_id = cus_id;
         this.cus_name = cus_name;
         this.cus_address = cus_address;
@@ -74,11 +74,11 @@ public class Customer {
         this.cus_contact = cus_contact;
     }
 
-    public List<Order> getOrders() {
+    public List<Reserve> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<Order> orders) {
+    public void setOrders(List<Reserve> orders) {
         this.orders = orders;
     }
 
@@ -89,12 +89,13 @@ public class Customer {
         cart.put(item,amount);
     }
 
-    public Order placeOrder(Session session){
-        Order order1 = new Order("OD01",this);
+    public void placeOrder(Session session){
+        Reserve order1 = new Reserve("OD01",this);
         AtomicReference<Double> total = new AtomicReference<>(0.0);
         cart.forEach((key,value)->{
             // update item
-            session.update(new Item(key.getItem_code(), key.getItem_description(), key.getItem_price(), key.getQtyOnHand()-value));
+            //session.update(new Item(key.getItem_code(), key.getItem_description(), key.getItem_price(), key.getQtyOnHand()-value));
+            key.setQtyOnHand(key.getQtyOnHand()-value);
             OrderDetails orderDetails = new OrderDetails(order1,key,value);
             order1.getOrderDetails().add(orderDetails);
             key.getOrderDetails().add(orderDetails);
@@ -104,8 +105,8 @@ public class Customer {
         });
         order1.setPrice(total.get());
         session.save(order1);
+        this.getOrders().add(order1);
 
-        return order1;
     }
 
     @Override

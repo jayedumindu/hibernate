@@ -2,7 +2,7 @@ package util;
 
 import entity.Customer;
 import entity.Item;
-import entity.Order;
+import entity.Reserve;
 import entity.OrderDetails;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,7 +14,7 @@ public class FactoryConfiguration {
     private FactoryConfiguration() {
         Configuration configuration = new Configuration().configure().addAnnotatedClass(Customer.class)
                 .addAnnotatedClass(Item.class)
-                .addAnnotatedClass(Order.class)
+                .addAnnotatedClass(Reserve.class)
                 .addAnnotatedClass(OrderDetails.class);
         sessionFactory = configuration.buildSessionFactory();
     }

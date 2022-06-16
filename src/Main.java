@@ -1,6 +1,6 @@
 import entity.Customer;
 import entity.Item;
-import entity.Order;
+import entity.Reserve;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.FactoryConfiguration;
@@ -23,15 +23,14 @@ public class Main {
         Transaction transaction = session.beginTransaction();
 
         // crud
-//        session.save(item1);
-//        session.save(item2);
-//        session.save(c1);
+        session.save(item1);
+        session.save(item2);
+        session.save(c1);
 
         c1.addToCart(item1,2);
         c1.addToCart(item2,5);
 
-        Order order = c1.placeOrder(session);
-        c1.getOrders().add(order);
+        c1.placeOrder(session);
 
         transaction.commit();
 
