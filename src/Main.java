@@ -17,17 +17,21 @@ public class Main {
 
         Customer c1 = new Customer("C001","Pasan","Galle","0771939234");
 
-        c1.addToCart(item1,2);
-        c1.addToCart(item2,5);
-
-
-
 
         Session session = FactoryConfiguration.getInstance().getSession();
 
         Transaction transaction = session.beginTransaction();
 
         // crud
+//        session.save(item1);
+//        session.save(item2);
+//        session.save(c1);
+
+        c1.addToCart(item1,2);
+        c1.addToCart(item2,5);
+
+        Order order = c1.placeOrder(session);
+        c1.getOrders().add(order);
 
         transaction.commit();
 

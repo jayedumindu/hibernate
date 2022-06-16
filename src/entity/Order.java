@@ -34,11 +34,9 @@ public class Order {
         this.customer = customer;
     }
 
-    public Order(String orderId, double price, Customer customer, List<OrderDetails> orderDetails) {
+    public Order(String orderId, Customer customer) {
         this.orderId = orderId;
-        this.price = price;
         this.customer = customer;
-        this.orderDetails = orderDetails;
     }
 
     public Order(String orderId, Date date, double price, Customer customer, List<OrderDetails> orderDetails) {

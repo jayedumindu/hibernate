@@ -14,17 +14,15 @@ public class OrderDetails {
     private Item item;
 
     private int orderQty;
-    @Id
-    private String id;
+
 
     public OrderDetails() {
     }
 
-    public OrderDetails(Order order, Item item, int orderQty, String id) {
+    public OrderDetails(Order order, Item item, int orderQty) {
         this.order = order;
         this.item = item;
         this.orderQty = orderQty;
-        this.id = id;
     }
 
     public Order getOrder() {
@@ -51,13 +49,7 @@ public class OrderDetails {
         this.orderQty = orderQty;
     }
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     @Override
     public String toString() {
@@ -65,7 +57,6 @@ public class OrderDetails {
                 "order=" + order +
                 ", item=" + item +
                 ", orderQty=" + orderQty +
-                ", id='" + id + '\'' +
                 '}';
     }
 }

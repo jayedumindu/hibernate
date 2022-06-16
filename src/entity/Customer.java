@@ -1,11 +1,14 @@
 package entity;
 
+import org.hibernate.Session;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Entity
 public class Customer {
@@ -86,8 +89,23 @@ public class Customer {
         cart.put(item,amount);
     }
 
-    public void placeOrder(){
+    public Order placeOrder(Session session){
+        Order order1 = new Order("OD01",this);
+        AtomicReference<Double> total = new AtomicReference<>(0.0);
+        cart.forEach((key,value)->{
+            // update item
+            session.update(new Item(key.getItem_code(), key.getItem_description(), key.getItem_price(), key.getQtyOnHand()-value));
+            OrderDetails orderDetails = new OrderDetails(order1,key,value);
+            order1.getOrderDetails().add(orderDetails);
+            key.getOrderDetails().add(orderDetails);
+            // details
+            session.save(orderDetails);
+            total.updateAndGet(v -> v + key.getItem_price() * value);
+        });
+        order1.setPrice(total.get());
+        session.save(order1);
 
+        return order1;
     }
 
     @Override
