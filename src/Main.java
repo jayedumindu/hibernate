@@ -23,14 +23,14 @@ public class Main {
         Transaction transaction = session.beginTransaction();
 
         // crud
-        session.save(item1);
+        /*session.save(item1);
         session.save(item2);
         session.save(c1);
 
         c1.addToCart(item1,2);
         c1.addToCart(item2,5);
 
-        c1.placeOrder(session);
+        c1.placeOrder(session);*/
 
         transaction.commit();
 
