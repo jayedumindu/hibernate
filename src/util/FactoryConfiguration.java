@@ -1,9 +1,9 @@
 package util;
 
-import entity.Customer;
-import entity.Item;
-import entity.Reserve;
-import entity.OrderDetails;
+import entity.Reservation;
+import entity.Room;
+import entity.Student;
+import entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -13,10 +13,10 @@ public class FactoryConfiguration {
     private SessionFactory sessionFactory;
     private FactoryConfiguration() {
         Configuration configuration = new Configuration().configure()
-                .addAnnotatedClass(Customer.class)
-                .addAnnotatedClass(Item.class)
-                .addAnnotatedClass(Reserve.class)
-                .addAnnotatedClass(OrderDetails.class);
+                .addAnnotatedClass(User.class)
+                .addAnnotatedClass(Reservation.class)
+                .addAnnotatedClass(Room.class)
+                .addAnnotatedClass(Student.class);
         sessionFactory = configuration.buildSessionFactory();
     }
     public static FactoryConfiguration getInstance(){

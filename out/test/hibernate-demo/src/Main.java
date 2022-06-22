@@ -12,7 +12,7 @@ public class Main {
 
         // creation
 
-        Item item1 = new Item("I001","Rice",200.00,100);
+        Item item1 = new Item("I003","Coconut Oil",480.00,20);
         Item item2 = new Item("I002","Dhal",450.00,50);
 
         Customer c1 = new Customer("C001","Pasan","Galle","0771939234");
@@ -23,14 +23,17 @@ public class Main {
         Transaction transaction = session.beginTransaction();
 
         // crud
+
         session.save(item1);
+
+        /*
         session.save(item2);
         session.save(c1);
 
         c1.addToCart(item1,2);
         c1.addToCart(item2,5);
 
-        c1.placeOrder(session);
+        c1.placeOrder(session);*/
 
         transaction.commit();
 
