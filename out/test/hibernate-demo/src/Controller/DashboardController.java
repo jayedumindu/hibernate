@@ -27,7 +27,7 @@ public class DashboardController {
 
     public void getLoggedIn(ActionEvent actionEvent) throws IOException {
         Stage stage = (Stage) mainPane.getScene().getWindow();
-        Parent root = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("./UI/login.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/UI/login.fxml")));
         stage.setScene(new Scene(root));
         stage.show();
     }

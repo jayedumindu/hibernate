@@ -1,9 +1,7 @@
 package DTOs;
 
 import entity.Reservation;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +9,19 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class RoomDTO {
 
+    @NonNull
     private String roomTypeId;
+    @NonNull
     private String type;
+    @NonNull
     private double keyMoney;
+    @NonNull
     private int quantity;
 
     private List<Reservation> reservations = new ArrayList<>();
+
 
 }

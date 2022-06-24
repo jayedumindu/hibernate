@@ -1,25 +1,40 @@
 package DAO.custom.impl;
 
 import DAO.custom.UserDAO;
+import entity.Room;
 import entity.User;
+import org.hibernate.Session;
+import util.FactoryConfiguration;
 
+import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
+
+    private final Session session;
+
+    public Session getSession() {
+        return session;
+    }
+
+    public UserDAOImpl() throws IOException {
+        session = FactoryConfiguration.getInstance().getSession();
+    }
+
     @Override
-    public ArrayList<User> getAll() throws SQLException, ClassNotFoundException {
+    public List<Room> getAll() throws SQLException, ClassNotFoundException {
         return null;
     }
 
     @Override
-    public boolean save(User entity) throws SQLException, ClassNotFoundException {
-        return false;
+    public void save(User entity) throws SQLException, ClassNotFoundException {
+
     }
 
     @Override
-    public boolean update(User entity) throws SQLException, ClassNotFoundException {
-        return false;
+    public void update(User entity) throws SQLException, ClassNotFoundException {
+
     }
 
     @Override
@@ -33,8 +48,8 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean delete(String s) throws SQLException, ClassNotFoundException {
-        return false;
+    public void delete(String s) throws SQLException, ClassNotFoundException {
+
     }
 
     @Override

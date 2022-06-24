@@ -2,24 +2,39 @@ package DAO.custom.impl;
 
 import DAO.custom.ReservationDAO;
 import entity.Reservation;
+import entity.Room;
+import org.hibernate.Session;
+import util.FactoryConfiguration;
 
+import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
 public class ReservationDAOImpl implements ReservationDAO {
+
+    private final Session session;
+
+    public Session getSession() {
+        return session;
+    }
+
+    public ReservationDAOImpl() throws IOException {
+        session = FactoryConfiguration.getInstance().getSession();
+    }
+
     @Override
-    public ArrayList<Reservation> getAll() throws SQLException, ClassNotFoundException {
+    public List<Room> getAll() throws SQLException, ClassNotFoundException {
         return null;
     }
 
     @Override
-    public boolean save(Reservation entity) throws SQLException, ClassNotFoundException {
-        return false;
+    public void save(Reservation entity) throws SQLException, ClassNotFoundException {
+
     }
 
     @Override
-    public boolean update(Reservation entity) throws SQLException, ClassNotFoundException {
-        return false;
+    public void update(Reservation entity) throws SQLException, ClassNotFoundException {
+
     }
 
     @Override
@@ -33,12 +48,13 @@ public class ReservationDAOImpl implements ReservationDAO {
     }
 
     @Override
-    public boolean delete(String s) throws SQLException, ClassNotFoundException {
-        return false;
+    public void delete(String s) throws SQLException, ClassNotFoundException {
+
     }
 
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
         return null;
     }
+
 }

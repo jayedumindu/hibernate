@@ -4,6 +4,8 @@ import BO.custom.impl.ReservationBOImpl;
 import BO.custom.impl.RoomBOImpl;
 import BO.custom.impl.StudentBOImpl;
 
+import java.io.IOException;
+
 public class BoFactory {
     private static BoFactory boFactory;
 
@@ -17,7 +19,7 @@ public class BoFactory {
         return boFactory;
     }
 
-    public SuperBO getBO(BOTypes types) {
+    public SuperBO getBO(BOTypes types) throws IOException {
         switch (types) {
             case RESERVATION:
                 return new ReservationBOImpl();

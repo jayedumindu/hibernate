@@ -4,6 +4,8 @@ import DAO.custom.impl.ReservationDAOImpl;
 import DAO.custom.impl.RoomDAOImpl;
 import DAO.custom.impl.StudentDAOImpl;
 
+import java.io.IOException;
+
 public class DaoFactory {
     private static DaoFactory daoFactory;
 
@@ -21,7 +23,7 @@ public class DaoFactory {
         STUDENT,ROOM,RESERVATION
     }
 
-    public SuperDAO getDAO(DAOTypes types) {
+    public SuperDAO getDAO(DAOTypes types) throws IOException {
         switch (types) {
             case STUDENT:
                 return new StudentDAOImpl();
