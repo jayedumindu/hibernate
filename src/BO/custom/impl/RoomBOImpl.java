@@ -125,12 +125,9 @@ public class RoomBOImpl implements RoomBO {
             transaction.rollback();
         }
         if(transaction.getStatus() == TransactionStatus.COMMITTED){
-            //roomDAO.getSession().close();
             return true;
         }else {
-            //roomDAO.getSession().close();
             return false;}
-
     }
 
     @Override

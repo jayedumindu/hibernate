@@ -1,9 +1,9 @@
 package DAO.custom.impl;
 
 import DAO.custom.StudentDAO;
-import entity.Room;
 import entity.Student;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import util.FactoryConfiguration;
 
 import java.io.IOException;
@@ -23,33 +23,36 @@ public class StudentDAOImpl implements StudentDAO {
     }
 
     @Override
-    public List<Room> getAll() throws SQLException, ClassNotFoundException {
-        return null;
+    public List<Student> getAll() throws SQLException, ClassNotFoundException {
+        Query query = session.createQuery("from Student");
+        return query.list();
     }
 
     @Override
     public void save(Student entity) throws SQLException, ClassNotFoundException {
-
+        session.save(entity);
     }
 
     @Override
     public void update(Student entity) throws SQLException, ClassNotFoundException {
-
+        session.update(entity);
     }
 
     @Override
     public Student search(String s) throws SQLException, ClassNotFoundException {
-        return null;
+        return (Student) session.get(s,Student.class);
     }
 
     @Override
     public boolean exist(String s) throws SQLException, ClassNotFoundException {
-        return false;
+        return session.get(s, Student.class) == null;
     }
 
     @Override
     public void delete(String s) throws SQLException, ClassNotFoundException {
-
+        Student student = new Student();
+        student.setSId(s);
+        session.delete(student);
     }
 
     @Override

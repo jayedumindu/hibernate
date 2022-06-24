@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface SuperDAO<T,ID> {
-    List<Room> getAll() throws SQLException, ClassNotFoundException;
+    List<T> getAll() throws SQLException, ClassNotFoundException;
 
     void save(T entity) throws SQLException, ClassNotFoundException;
 
