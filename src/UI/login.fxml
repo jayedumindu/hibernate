@@ -1,14 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controller.LoginController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
+   <children>
+      <AnchorPane prefHeight="700.0" prefWidth="200.0" style="-fx-background-color: white;">
+         <children>
+            <ImageView fx:id="register" fitHeight="100.0" fitWidth="100.0" layoutX="50.0" layoutY="58.0" onMouseReleased="#loadSubView">
+               <image>
+                  <Image url="@etc/student-mg.jpg" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fx:id="mgm" fitHeight="100.0" fitWidth="100.0" layoutX="50.0" layoutY="413.0" onMouseReleased="#loadSubView">
+               <image>
+                  <Image url="@etc/room-mg.jpg" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Label layoutX="64.0" layoutY="147.0" prefHeight="40.0" prefWidth="72.0" text="Register">
+               <font>
+                  <Font name="Javanese Text" size="20.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="13.0" layoutY="526.0" prefHeight="32.0" prefWidth="174.0" text="Room Management">
+               <font>
+                  <Font name="Javanese Text" size="20.0" />
+               </font>
+            </Label>
+            <Text layoutX="50.0" layoutY="589.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Add or Delete  And Customize  Rooms" textAlignment="CENTER" wrappingWidth="100.0">
+               <font>
+                  <Font name="Candara Light Italic" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="50.0" layoutY="217.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Perform registration and check Availability of rooms" textAlignment="CENTER" wrappingWidth="100.0">
+               <font>
+                  <Font name="Candara Light Italic" size="15.0" />
+               </font>
+            </Text>
+         </children>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </AnchorPane>
+      <AnchorPane fx:id="loader" layoutX="200.0" prefHeight="700.0" prefWidth="800.0" />
+   </children>
 </AnchorPane>

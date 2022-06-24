@@ -21,7 +21,7 @@ public class Room {
     private String type;
     @Column(name = "Key_Money")
     private double keyMoney;
-    @Column(name = "Quantity", columnDefinition = "UNSIGNED INT")
+    @Column(name = "Quantity", columnDefinition = "INT UNSIGNED")
     private int quantity;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
