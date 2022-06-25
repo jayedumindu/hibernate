@@ -2,7 +2,6 @@ package DAO.custom.impl;
 
 import DAO.custom.ReservationDAO;
 import entity.Reservation;
-import entity.Room;
 import org.hibernate.Session;
 import util.FactoryConfiguration;
 
@@ -23,7 +22,7 @@ public class ReservationDAOImpl implements ReservationDAO {
     }
 
     @Override
-    public List<Room> getAll() throws SQLException, ClassNotFoundException {
+    public List<Reservation> getAll() throws SQLException, ClassNotFoundException {
         return null;
     }
 
@@ -54,7 +53,7 @@ public class ReservationDAOImpl implements ReservationDAO {
 
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
-        return null;
+
     }
 
 }

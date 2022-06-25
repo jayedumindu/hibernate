@@ -1,7 +1,6 @@
 package DAO.custom.impl;
 
 import DAO.custom.UserDAO;
-import entity.Room;
 import entity.User;
 import org.hibernate.Session;
 import util.FactoryConfiguration;
@@ -23,7 +22,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<Room> getAll() throws SQLException, ClassNotFoundException {
+    public List<User> getAll() throws SQLException, ClassNotFoundException {
         return null;
     }
 

@@ -35,7 +35,6 @@ public class StudentBOImpl implements StudentBO {
         }catch (Exception e){
             transaction.rollback();
         }
-        //roomDAO.getSession().close();
         if (roomList != null) {
             for (Student st : roomList) {
                 dtoS.add(new StudentDTO(st.getSId(),st.getAddress(),st.getContact(),st.getDOB(),st.getGender()));
@@ -55,10 +54,7 @@ public class StudentBOImpl implements StudentBO {
         }catch (Exception e){
             transaction.rollback();
         }
-        if(transaction.getStatus() == TransactionStatus.COMMITTED){
-            return true;
-        }else {
-            return false;}
+        return transaction.getStatus() == TransactionStatus.COMMITTED;
     }
 
     @Override
@@ -71,10 +67,7 @@ public class StudentBOImpl implements StudentBO {
         }catch (Exception e){
             transaction.rollback();
         }
-        if(transaction.getStatus() == TransactionStatus.COMMITTED){
-            return true;
-        }else {
-            return false;}
+        return transaction.getStatus() == TransactionStatus.COMMITTED;
     }
 
     @Override
@@ -88,12 +81,10 @@ public class StudentBOImpl implements StudentBO {
             transaction.rollback();
         }
         if(transaction.getStatus() == TransactionStatus.COMMITTED){
-            //roomDAO.getSession().close();
             if (student != null) {
                 return new StudentDTO(student.getSId(),student.getAddress(),student.getContact(),student.getDOB(),student.getGender());
             }
         }
-        //roomDAO.getSession().close();
         return null;
     }
 
@@ -119,10 +110,7 @@ public class StudentBOImpl implements StudentBO {
         }catch (Exception e){
             transaction.rollback();
         }
-        if(transaction.getStatus() == TransactionStatus.COMMITTED){
-            return true;
-        }else {
-            return false;}
+        return transaction.getStatus() == TransactionStatus.COMMITTED;
     }
 
     @Override
