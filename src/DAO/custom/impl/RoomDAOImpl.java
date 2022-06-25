@@ -45,14 +45,15 @@ public class RoomDAOImpl implements RoomDAO {
 
     @Override
     public boolean exist(String s) throws SQLException, ClassNotFoundException {
-        return session.get(s, Room.class) == null;
+        // exception
+        return session.get(s, Room.class) != null;
     }
 
     @Override
     public void delete(String s) throws SQLException, ClassNotFoundException {
         Room room = new Room();
         room.setRoomTypeId(s);
-        session.delete(room);
+        session.remove(room);
     }
 
     @Override

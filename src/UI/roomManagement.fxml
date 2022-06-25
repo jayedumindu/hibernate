@@ -14,24 +14,24 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.RoomManagementController">
    <children>
-      <JFXTabPane prefHeight="700.0" prefWidth="800.0">
+      <JFXTabPane fx:id="tabPane" prefHeight="700.0" prefWidth="800.0">
          <tabs>
-            <Tab text="Add Room">
+            <Tab fx:id="addRoomTab" text="Add Room">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <JFXTextField fx:id="roomId" layoutX="84.0" layoutY="59.0" promptText="RM-XXXX" />
-                        <JFXTextField fx:id="roomType" alignment="CENTER" layoutX="381.0" layoutY="59.0" prefHeight="31.0" prefWidth="241.0" promptText="Room ID" text="Room Type" />
-                        <JFXTextField fx:id="keyMoney" alignment="CENTER" layoutX="84.0" layoutY="158.0" promptText="Room ID" text="Key Money" />
+                        <JFXTextField fx:id="roomType" alignment="CENTER" layoutX="381.0" layoutY="59.0" prefHeight="31.0" prefWidth="241.0" promptText="Room Type" />
+                        <JFXTextField fx:id="keyMoney" alignment="CENTER" layoutX="84.0" layoutY="158.0" promptText="Key Money" />
                         <Spinner fx:id="noOfRooms" editable="true" layoutX="562.0" layoutY="158.0" prefHeight="31.0" prefWidth="84.0" />
-                        <JFXButton fx:id="saveBtn" layoutX="330.0" layoutY="263.0" onAction="#addRoom" text="Save" />
+                        <JFXButton fx:id="saveBtn" buttonType="RAISED" layoutX="330.0" layoutY="263.0" onAction="#addRoom" ripplerFill="#5b819e" text="Save" />
                         <Label layoutX="460.0" layoutY="163.0" text="Room Count" />
                         <Separator layoutX="14.0" layoutY="340.0" prefHeight="0.0" prefWidth="762.0" />
                      </children>
                   </AnchorPane>
               </content>
             </Tab>
-            <Tab text="Inventory">
+            <Tab fx:id="inventoryTab" text="Inventory">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -43,8 +43,8 @@
                               <TableColumn fx:id="qty" minWidth="4.0" prefWidth="117.0" text="QTY" />
                            </columns>
                         </TableView>
-                        <JFXButton layoutX="240.0" layoutY="597.0" onAction="#rmvRoom" text="REMOVE" />
-                        <JFXButton layoutX="476.0" layoutY="597.0" onAction="#updateRoom" text="UPDATE" />
+                        <JFXButton buttonType="RAISED" layoutX="240.0" layoutY="597.0" onAction="#rmvRoom" ripplerFill="#92b2cc" text="REMOVE" />
+                        <JFXButton buttonType="RAISED" layoutX="476.0" layoutY="597.0" onAction="#updateRoom" text="UPDATE" />
                      </children>
                   </AnchorPane>
               </content>

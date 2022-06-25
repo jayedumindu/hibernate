@@ -35,7 +35,6 @@ public class RoomBOImpl implements RoomBO {
         }catch (Exception e){
             transaction.rollback();
         }
-        //roomDAO.getSession().close();
         if (roomList != null) {
             for (Room room : roomList) {
                 dtoS.add(new RoomDTO(room.getRoomTypeId(),room.getType(),room.getKeyMoney(),room.getQuantity()));
@@ -55,12 +54,7 @@ public class RoomBOImpl implements RoomBO {
         }catch (Exception e){
             transaction.rollback();
         }
-        if(transaction.getStatus() == TransactionStatus.COMMITTED){
-            //roomDAO.getSession().close();
-            return true;
-        }else {
-            //roomDAO.getSession().close();
-            return false;}
+        return transaction.getStatus() == TransactionStatus.COMMITTED;
     }
 
     @Override
@@ -73,12 +67,7 @@ public class RoomBOImpl implements RoomBO {
         }catch (Exception e){
             transaction.rollback();
         }
-        if(transaction.getStatus() == TransactionStatus.COMMITTED){
-            //roomDAO.getSession().close();
-            return true;
-        }else {
-            //roomDAO.getSession().close();
-            return false;}
+        return transaction.getStatus() == TransactionStatus.COMMITTED;
     }
 
     @Override
@@ -92,12 +81,10 @@ public class RoomBOImpl implements RoomBO {
             transaction.rollback();
         }
         if(transaction.getStatus() == TransactionStatus.COMMITTED){
-            //roomDAO.getSession().close();
             if (room != null) {
                 return new RoomDTO(room.getRoomTypeId(),room.getType(),room.getKeyMoney(),room.getQuantity());
             }
         }
-        //roomDAO.getSession().close();
         return null;
     }
 
@@ -111,7 +98,6 @@ public class RoomBOImpl implements RoomBO {
         }catch (Exception e){
             transaction.rollback();
         }
-        //roomDAO.getSession().close();
         return isFound;
     }
 
@@ -120,17 +106,13 @@ public class RoomBOImpl implements RoomBO {
         transaction.begin();
         try{
             roomDAO.delete(s);
+            roomDAO.getSession().clear();
             transaction.commit();
         }catch (Exception e){
+            System.out.println("deletion rolled back");
             transaction.rollback();
         }
-        if(transaction.getStatus() == TransactionStatus.COMMITTED){
-            //roomDAO.getSession().close();
-            return true;
-        }else {
-            //roomDAO.getSession().close();
-            return false;}
-
+        return transaction.getStatus() == TransactionStatus.COMMITTED;
     }
 
     @Override

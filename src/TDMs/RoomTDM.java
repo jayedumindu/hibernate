@@ -1,33 +1,27 @@
-package entity;
+package TDMs;
 
+import entity.Reservation;
 import lombok.*;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @RequiredArgsConstructor
-public class Room {
+public class RoomTDM {
 
-    @Id
-    @Column(name = "Room_Code")
     @NonNull
     private String roomTypeId;
-    @Column(name = "Type")
     @NonNull
     private String type;
-    @Column(name = "Key_Money")
     @NonNull
     private double keyMoney;
-    @Column(name = "Quantity", columnDefinition = "INT UNSIGNED")
     @NonNull
     private int quantity;
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Reservation> reservations = new ArrayList<>();
+
 
 }
