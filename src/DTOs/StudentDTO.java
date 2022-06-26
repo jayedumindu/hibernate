@@ -3,6 +3,7 @@ package DTOs;
 import entity.Reservation;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,7 +21,7 @@ public class StudentDTO {
     @NonNull
     private String contact;
     @NonNull
-    private Date DOB;
+    private LocalDate DOB;
     @NonNull
     private String gender;
 

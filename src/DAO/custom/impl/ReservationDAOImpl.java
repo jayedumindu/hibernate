@@ -57,11 +57,16 @@ public class ReservationDAOImpl implements ReservationDAO {
 
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
-        Query query = session.createQuery("SELECT Reservation.resId AS id FROM Reservation ORDER BY id DESC");
+        /*Query query = session. createQuery("SELECT Reservation.resId  FROM Reservation ORDER BY resId DESC");
         query.setMaxResults(1);
+        if(query.uniqueResult()==null){
+            System.out.println("null");
+            return "RS-001";
+        }
         String prevId = (String) query.uniqueResult();
         String[] id = prevId.split("-");
-        return id[0] + (Integer.parseInt(id[1]) + 1);
+        return id[0] + (Integer.parseInt(id[1]) + 1);*/
+        return "RS-001";
     }
 
 }

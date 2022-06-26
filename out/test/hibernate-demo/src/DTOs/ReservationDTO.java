@@ -14,14 +14,14 @@ public class ReservationDTO {
 
     @NonNull
     private String resId;
-    @NonNull
+
     private Date date;
     @NonNull
     private String status;
 
     private boolean paid;
 
-    private Student student;
+    private StudentDTO student;
 
-    private Room room;
+    private RoomDTO room;
 }

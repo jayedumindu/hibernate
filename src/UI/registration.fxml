@@ -23,17 +23,17 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <JFXTextField fx:id="stIdTxt" alignment="CENTER" layoutX="42.0" layoutY="61.0" promptText="Student ID" />
+                        <JFXTextField fx:id="stIdTxt" alignment="CENTER" layoutX="42.0" layoutY="61.0" promptText="Student U-ID" />
                         <JFXTextField fx:id="fNameTxt" alignment="CENTER" layoutX="303.0" layoutY="61.0" promptText="fname" />
                         <JFXTextField fx:id="addressTxt" alignment="CENTER" layoutX="68.0" layoutY="261.0" prefHeight="31.0" prefWidth="667.0" promptText="Name" text="Address">
                            <font>
                               <Font name="System Italic" size="15.0" />
                            </font>
                         </JFXTextField>
-                        <JFXTextField fx:id="contactTxt" alignment="CENTER" layoutX="119.0" layoutY="182.0" promptText="contact" />
+                        <JFXTextField fx:id="contactTxt" alignment="CENTER" layoutX="42.0" layoutY="167.0" promptText="contact" />
                         <JFXTextField fx:id="lNameTxt" alignment="CENTER" layoutX="540.0" layoutY="61.0" promptText="lname" />
-                        <JFXDatePicker fx:id="pickDate" layoutX="459.0" layoutY="182.0" />
-                        <JFXComboBox fx:id="roomTypeCombo" layoutX="82.0" layoutY="376.0" promptText="Room Type" />
+                        <JFXDatePicker fx:id="pickDate" layoutX="505.0" layoutY="167.0" />
+                        <JFXComboBox fx:id="roomTypeCombo" layoutX="82.0" layoutY="376.0" onAction="#loadRoom" promptText="Room Type" />
                         <JFXButton fx:id="register" buttonType="RAISED" layoutX="365.0" layoutY="563.0" onAction="#registerStudent" text="Register" />
                         <Label layoutX="540.0" layoutY="364.0" text="Key Money  ">
                            <font>
@@ -45,8 +45,8 @@
                               <Font size="19.0" />
                            </font>
                         </Label>
-                        <RadioButton fx:id="paidRd" layoutX="192.0" layoutY="489.0" mnemonicParsing="false" text="Paid" />
-                        <RadioButton fx:id="payLaterRd" layoutX="505.0" layoutY="489.0" mnemonicParsing="false" text="Pay Later" />
+                        <RadioButton fx:id="paidRd" layoutX="681.0" layoutY="354.0" mnemonicParsing="false" text="Paid" />
+                        <RadioButton fx:id="payLaterRd" layoutX="666.0" layoutY="398.0" mnemonicParsing="false" text="Pay Later" />
                         <Separator layoutX="5.0" layoutY="329.0" prefHeight="12.0" prefWidth="786.0" />
                         <Separator layoutX="7.0" layoutY="444.0" prefHeight="12.0" prefWidth="786.0" />
                         <Label fx:id="descriptionLbl" alignment="CENTER" layoutX="231.0" layoutY="381.0" prefHeight="21.0" prefWidth="127.0" text="A/C - Food">
@@ -54,6 +54,8 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
+                        <JFXComboBox fx:id="genderCmb" layoutX="314.0" layoutY="167.0" promptText="Gender" />
+                        <JFXComboBox fx:id="statusCmb" layoutX="294.0" layoutY="483.0" prefHeight="31.0" prefWidth="188.0" promptText="Status" />
                      </children>
                   </AnchorPane>
               </content>
@@ -92,14 +94,14 @@
                               <TableColumn prefWidth="183.0" text="Description" />
                           </columns>
                         </TableView>
-                        <JFXButton layoutX="370.0" layoutY="601.0" text="PAID" />
+                        <JFXButton layoutX="337.0" layoutY="604.0" text="MARK AS PAID" />
                         <JFXComboBox layoutX="294.0" layoutY="43.0" promptText="Room Type" />
-                        <Label layoutX="397.0" layoutY="107.0" text="YES">
+                        <Label layoutX="397.0" layoutY="107.0" prefHeight="35.0" prefWidth="73.0">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <Label layoutX="402.0" layoutY="149.0" text="35000.00">
+                        <Label layoutX="397.0" layoutY="149.0" prefHeight="35.0" prefWidth="140.0">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -114,6 +116,26 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Students">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="students" layoutX="21.0" layoutY="32.0" prefHeight="475.0" prefWidth="758.0">
+                           <columns>
+                              <TableColumn fx:id="sId" prefWidth="114.0" text="Student ID" />
+                              <TableColumn fx:id="fName" prefWidth="130.0" text="Fname" />
+                              <TableColumn fx:id="lName" prefWidth="131.0" text="Lname" />
+                              <TableColumn fx:id="contact" prefWidth="150.0" text="Contact No" />
+                              <TableColumn fx:id="dob" prefWidth="100.0" text="DOB" />
+                              <TableColumn fx:id="address" prefWidth="132.0" text="Address" />
+                           </columns>
+                        </TableView>
+                        <JFXButton layoutX="250.0" layoutY="552.0" onAction="#removeStudent" text="REMOVE" />
+                        <JFXButton layoutX="453.0" layoutY="552.0" onAction="#updateStudent" text="UPDATE" />
                      </children>
                   </AnchorPane>
                </content>

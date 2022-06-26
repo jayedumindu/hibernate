@@ -3,6 +3,7 @@ package entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,9 +25,8 @@ public class Student {
     @Column(name = "Contact_NO")
     @NonNull
     private String contact;
-    @Temporal(TemporalType.TIMESTAMP)
     @NonNull
-    private Date DOB;
+    private LocalDate DOB;
     @Column(name = "Gender")
     @NonNull
     private String gender;

@@ -45,6 +45,7 @@ public class RoomDAOImpl implements RoomDAO {
 
     @Override
     public boolean exist(String s) throws SQLException, ClassNotFoundException {
+        // exception
         return session.get(s, Room.class) != null;
     }
 

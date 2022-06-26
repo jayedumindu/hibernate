@@ -1,6 +1,7 @@
 package entity;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -17,8 +18,8 @@ public class Reservation {
     @NonNull
     private String resId;
     @Column(name = "Date")
+    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @NonNull
     private Date date;
     @Column(name = "Status")
     @NonNull

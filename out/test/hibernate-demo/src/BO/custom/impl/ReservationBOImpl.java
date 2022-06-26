@@ -4,7 +4,11 @@ import BO.custom.ReservationBO;
 import DAO.DaoFactory;
 import DAO.custom.ReservationDAO;
 import DTOs.ReservationDTO;
+import DTOs.RoomDTO;
+import DTOs.StudentDTO;
 import entity.Reservation;
+import entity.Room;
+import entity.Student;
 import org.hibernate.Transaction;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
@@ -37,7 +41,11 @@ public class ReservationBOImpl implements ReservationBO {
         }
         if (reservationList != null) {
             for (Reservation reservation : reservationList) {
-                dtoS.add(new ReservationDTO(reservation.getResId(),reservation.getDate(),reservation.getStatus(),reservation.isPaid(),reservation.getStudent(),reservation.getRoom()));
+                RoomDTO roomDTO = new RoomDTO();
+                StudentDTO studentDTO = new StudentDTO();
+                roomDTO.setRoomTypeId(reservation.getRoom().getRoomTypeId());
+                studentDTO.setSId(reservation.getStudent().getSId());
+                dtoS.add(new ReservationDTO(reservation.getResId(),reservation.getDate(),reservation.getStatus(),reservation.isPaid(),studentDTO,roomDTO));
             }
         }
         // returns an empty arraylist if none found
@@ -45,8 +53,12 @@ public class ReservationBOImpl implements ReservationBO {
     }
 
     @Override
-    public boolean save(ReservationDTO dto) throws SQLException, ClassNotFoundException {
-        Reservation reservation = new Reservation(dto.getResId(),dto.getDate(),dto.getStatus(),dto.isPaid(),dto.getStudent(),dto.getRoom());
+    public boolean save(ReservationDTO reservationDTO) throws SQLException, ClassNotFoundException {
+        Student student = new Student();
+        Room room = new Room();
+        student.setSId(reservationDTO.getStudent().getSId());
+        room.setRoomTypeId(reservationDTO.getRoom().getRoomTypeId());
+        Reservation reservation = new Reservation(reservationDTO.getResId(),reservationDTO.getDate(),reservationDTO.getStatus(),reservationDTO.isPaid(), student, room);
         transaction.begin();
         try{
             reservationDAO.save(reservation);
@@ -59,7 +71,11 @@ public class ReservationBOImpl implements ReservationBO {
 
     @Override
     public boolean update(ReservationDTO dto) throws SQLException, ClassNotFoundException {
-        Reservation reservation = new Reservation(dto.getResId(),dto.getDate(),dto.getStatus(),dto.isPaid(),dto.getStudent(),dto.getRoom());
+        Room room = new Room();
+        Student student = new Student();
+        room.setRoomTypeId(dto.getRoom().getRoomTypeId());
+        student.setSId(dto.getStudent().getSId());
+        Reservation reservation = new Reservation(dto.getResId(),dto.getDate(),dto.getStatus(),dto.isPaid(),student,room);
         transaction.begin();
         try{
             reservationDAO.update(reservation);
@@ -82,7 +98,11 @@ public class ReservationBOImpl implements ReservationBO {
         }
         if(transaction.getStatus() == TransactionStatus.COMMITTED){
             if (reservation != null) {
-                return new ReservationDTO( reservation.getResId(),reservation.getDate(),reservation.getStatus(),reservation.isPaid(),reservation.getStudent(),reservation.getRoom());
+                RoomDTO roomDTO = new RoomDTO();
+                StudentDTO studentDTO = new StudentDTO();
+                roomDTO.setRoomTypeId(reservation.getRoom().getRoomTypeId());
+                studentDTO.setSId(reservation.getStudent().getSId());
+                return new ReservationDTO( reservation.getResId(),reservation.getDate(),reservation.getStatus(),reservation.isPaid(),studentDTO,roomDTO);
             }
         }
         return null;
