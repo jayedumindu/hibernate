@@ -1,6 +1,7 @@
 package DAO.custom.impl;
 
 import DAO.custom.StudentDAO;
+import entity.Custom;
 import entity.Student;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -58,5 +59,16 @@ public class StudentDAOImpl implements StudentDAO {
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
         return null;
+    }
+
+    @Override
+    public List<Custom> loadStudentsWhoNeedToPayKM() {
+        List<Custom> customList = null;
+        Query query = session.createQuery("select res.student.sId,res.student.stName,res.room.keyMoney,res.room.roomTypeId,res.room.type from Reservation AS res WHERE res.paid=false");
+        for (Object o :
+                query.list()) {
+            customList.add((Custom) o);
+        }
+        return customList;
     }
 }

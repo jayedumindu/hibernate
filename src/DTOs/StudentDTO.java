@@ -17,6 +17,8 @@ public class StudentDTO {
     @NonNull
     private String sId;
     @NonNull
+    private String sName;
+    @NonNull
     private String address;
     @NonNull
     private String contact;

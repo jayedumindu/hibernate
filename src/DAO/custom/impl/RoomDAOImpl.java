@@ -40,7 +40,9 @@ public class RoomDAOImpl implements RoomDAO {
 
     @Override
     public Room search(String s) throws SQLException, ClassNotFoundException {
-        return (Room) session.get(s,Room.class);
+        Query query = session.createQuery("FROM Room AS r WHERE r.roomTypeId = :code");
+        query.setParameter("code",s);
+        return (Room) query.list();
     }
 
     @Override

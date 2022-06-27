@@ -19,6 +19,9 @@ public class Student {
     @Column(name = "Student_ID")
     @NonNull
     private String sId;
+    @Column(name = "Student_Name")
+    @NonNull
+    private String stName;
     @Column(name = "Address")
     @NonNull
     private String address;

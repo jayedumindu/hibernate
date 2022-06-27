@@ -23,7 +23,7 @@ public class Room {
     @Column(name = "Key_Money")
     @NonNull
     private double keyMoney;
-    @Column(name = "Quantity", columnDefinition = "INT UNSIGNED")
+    @Column(name = "Quantity", columnDefinition = "INT(3) UNSIGNED")
     @NonNull
     private int quantity;
 

@@ -1,7 +1,5 @@
 package DTOs;
 
-import entity.Room;
-import entity.Student;
 import lombok.*;
 
 import java.util.Date;
