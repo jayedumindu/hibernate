@@ -5,6 +5,8 @@
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
@@ -17,50 +19,65 @@
 
 <Pane prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.RegistrationController">
    <children>
-      <JFXTabPane prefHeight="700.0" prefWidth="800.0">
+      <JFXTabPane fx:id="tabPane" prefHeight="700.0" prefWidth="800.0">
          <tabs>
-            <Tab text="Process">
+            <Tab fx:id="processTab" text="Process">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <JFXTextField fx:id="stIdTxt" alignment="CENTER" layoutX="42.0" layoutY="77.0" promptText="Student U-ID" />
-                        <JFXTextField fx:id="fNameTxt" alignment="CENTER" layoutX="294.0" layoutY="77.0" promptText="fname" />
-                        <JFXTextField fx:id="addressTxt" alignment="CENTER" layoutX="68.0" layoutY="261.0" prefHeight="31.0" prefWidth="667.0" promptText="Name" text="Address">
-                           <font>
-                              <Font name="System Italic" size="15.0" />
-                           </font>
-                        </JFXTextField>
-                        <JFXTextField fx:id="contactTxt" alignment="CENTER" layoutX="42.0" layoutY="167.0" promptText="contact" />
-                        <JFXTextField fx:id="lNameTxt" alignment="CENTER" layoutX="541.0" layoutY="77.0" promptText="lname" />
-                        <JFXDatePicker fx:id="pickDate" layoutX="505.0" layoutY="167.0" />
-                        <JFXComboBox fx:id="roomTypeCombo" layoutX="82.0" layoutY="376.0" onAction="#loadRoom" promptText="Room Type" />
-                        <JFXButton fx:id="register" buttonType="RAISED" layoutX="365.0" layoutY="563.0" onAction="#registerStudent" text="Register" />
-                        <Label layoutX="540.0" layoutY="364.0" text="Key Money  ">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="keyMoneyLbl" layoutX="549.0" layoutY="394.0" text="25000.00">
-                           <font>
-                              <Font size="19.0" />
-                           </font>
-                        </Label>
-                        <RadioButton fx:id="paidRd" layoutX="681.0" layoutY="354.0" mnemonicParsing="false" text="Paid" />
-                        <RadioButton fx:id="payLaterRd" layoutX="666.0" layoutY="398.0" mnemonicParsing="false" text="Pay Later" />
+                        <Pane fx:id="fromExistingStPane" layoutX="27.0" layoutY="271.0" prefHeight="55.0" prefWidth="743.0">
+                           <children>
+                              <JFXToggleButton fx:id="studentToggle" layoutX="6.0" layoutY="10.0" prefHeight="35.0" prefWidth="197.0" size="5.0" text="From existing student" />
+                              <JFXComboBox fx:id="studentCmb" disable="true" layoutX="254.0" layoutY="12.0" promptText="Select Student" />
+                           </children>
+                        </Pane>
+                        <Pane fx:id="stDetailsPane" layoutX="27.0" layoutY="61.0" prefHeight="201.0" prefWidth="743.0" style="-fx-background-color: #ccafad; -fx-border-radius: 10;">
+                           <children>
+                              <JFXTextField fx:id="contactTxt" alignment="CENTER" layoutX="38.0" layoutY="88.0" promptText="contact" />
+                              <JFXDatePicker fx:id="pickDate" layoutX="500.0" layoutY="88.0" />
+                              <JFXComboBox fx:id="genderCmb" layoutX="308.0" layoutY="88.0" promptText="Gender" />
+                              <JFXTextField fx:id="addressTxt" alignment="CENTER" layoutX="38.0" layoutY="149.0" prefHeight="31.0" prefWidth="667.0" promptText="Address">
+                                 <font>
+                                    <Font name="System Italic" size="15.0" />
+                                 </font>
+                              </JFXTextField>
+                              <JFXTextField fx:id="stIdTxt" alignment="CENTER" layoutX="30.0" layoutY="16.0" promptText="Student U-ID" />
+                              <JFXTextField fx:id="fNameTxt" alignment="CENTER" layoutX="274.0" layoutY="16.0" promptText="fname" />
+                              <JFXTextField fx:id="lNameTxt" alignment="CENTER" layoutX="518.0" layoutY="16.0" promptText="lname" />
+                           </children>
+                        </Pane>
+                        <Pane fx:id="reservationDetailsPane" layoutX="27.0" layoutY="349.0" prefHeight="150.0" prefWidth="743.0" style="-fx-background-color: #ccafad; -fx-border-radius: 10;">
+                           <children>
+                              <RadioButton fx:id="payLaterRd" layoutX="591.0" layoutY="35.0" mnemonicParsing="false" text="Pay Later" />
+                              <JFXComboBox fx:id="roomTypeCombo" layoutX="37.0" layoutY="30.0" onAction="#loadRoom" promptText="Room Type" />
+                              <Label layoutX="425.0" layoutY="30.0" text="Key Money  ">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <RadioButton fx:id="paidRd" layoutX="607.0" layoutY="82.0" mnemonicParsing="false" text="Paid" />
+                              <JFXComboBox fx:id="statusCmb" layoutX="37.0" layoutY="87.0" prefHeight="31.0" prefWidth="188.0" promptText="Status" />
+                              <Label fx:id="keyMoneyLbl" alignment="CENTER" layoutX="414.0" layoutY="79.0" prefHeight="21.0" prefWidth="127.0">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <JFXButton fx:id="register" alignment="CENTER" buttonType="RAISED" defaultButton="true" layoutX="251.0" layoutY="537.0" onAction="#registerStudent" prefHeight="31.0" prefWidth="215.0" text="Register" />
                         <Separator layoutX="5.0" layoutY="329.0" prefHeight="12.0" prefWidth="786.0" />
-                        <Separator layoutX="7.0" layoutY="444.0" prefHeight="12.0" prefWidth="786.0" />
-                        <Label fx:id="descriptionLbl" alignment="CENTER" layoutX="231.0" layoutY="381.0" prefHeight="21.0" prefWidth="127.0" text="A/C - Food">
+                        <Label fx:id="descriptionLbl" alignment="CENTER" layoutX="231.0" layoutY="381.0" prefHeight="21.0" prefWidth="127.0">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <JFXComboBox fx:id="genderCmb" layoutX="314.0" layoutY="167.0" promptText="Gender" />
-                        <JFXComboBox fx:id="statusCmb" layoutX="294.0" layoutY="483.0" prefHeight="31.0" prefWidth="188.0" promptText="Status" />
                         <Label fx:id="regIdLbl" layoutX="674.0" layoutY="14.0" text="XXXXXX" textFill="#b93d3d">
                            <font>
                               <Font name="System Bold" size="26.0" />
                            </font>
                         </Label>
+                        <Label fx:id="alertLbl" alignment="CENTER" layoutX="150.0" layoutY="602.0" prefHeight="21.0" prefWidth="376.0" />
+                        <Button fx:id="cancelBtn" cancelButton="true" layoutX="553.0" layoutY="597.0" mnemonicParsing="false" onAction="#cancelCurrentStatus" style="-fx-background-color: #bf5d56;" text="Cancel" textFill="WHITE" visible="false" />
                      </children>
                   </AnchorPane>
               </content>
@@ -101,24 +118,24 @@
                         </TableView>
                         <JFXButton layoutX="337.0" layoutY="604.0" onAction="#markStudentAsPaid" text="MARK AS PAID" />
                         <JFXComboBox fx:id="roomTypeAvlCmb" layoutX="294.0" layoutY="43.0" onAction="#roomAvailabilityCheck" promptText="Room Type" />
-                        <Label fx:id="availabilityLbl" layoutX="397.0" layoutY="107.0" prefHeight="35.0" prefWidth="73.0">
+                        <Label fx:id="availabilityLbl" layoutX="387.0" layoutY="108.0" prefHeight="35.0" prefWidth="73.0" textFill="#c92929">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <Label fx:id="keyMoneyAvlLbl" layoutX="397.0" layoutY="149.0" prefHeight="35.0" prefWidth="140.0">
+                        <Label fx:id="keyMoneyAvlLbl" layoutX="387.0" layoutY="150.0" prefHeight="35.0" prefWidth="140.0">
                            <font>
-                              <Font size="24.0" />
+                              <Font name="System Italic" size="24.0" />
                            </font>
                         </Label>
-                        <Label layoutX="244.0" layoutY="107.0" text="Availability : ">
+                        <Label layoutX="232.0" layoutY="153.0" text="Key-Money : ">
                            <font>
-                              <Font size="24.0" />
+                              <Font name="Calibri Light Italic" size="24.0" />
                            </font>
                         </Label>
-                        <Label layoutX="242.0" layoutY="149.0" text="Key-Money : ">
+                        <Label layoutX="242.0" layoutY="111.0" text="Availability : ">
                            <font>
-                              <Font size="24.0" />
+                              <Font name="Calibri Light Italic" size="24.0" />
                            </font>
                         </Label>
                      </children>

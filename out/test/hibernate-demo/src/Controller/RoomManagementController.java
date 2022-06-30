@@ -36,6 +36,8 @@ public class RoomManagementController {
     public JFXTabPane tabPane;
     public Tab addRoomTab;
     public Tab inventoryTab;
+    public Label alertLbl;
+    public Button cancel;
 
     private ObservableList<RoomTDM> roomList = FXCollections.observableArrayList();
 
@@ -87,6 +89,9 @@ public class RoomManagementController {
         noOfRooms.getValueFactory().setValue(selectedItem.getQuantity());
 
         saveBtn.setText("SAVE CHANGES");
+
+        alertLbl.setText("You're updating a Room, click cancel to invoke!");
+        cancel.setVisible(true);
     }
 
     public void addRoom(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
@@ -102,6 +107,8 @@ public class RoomManagementController {
             if(roomBo.update(room)){
                 new Alert(Alert.AlertType.INFORMATION,"updated!").show();
                 saveBtn.setText("SAVE");
+                alertLbl.setText("");
+                cancel.setVisible(false);
             }else {
                 new Alert(Alert.AlertType.ERROR,"updating interrupted!").showAndWait();
             }
@@ -123,5 +130,12 @@ public class RoomManagementController {
         roomType.clear();
         keyMoney.clear();
         noOfRooms.getValueFactory().setValue(1);
+    }
+
+    public void cancelUpdate(ActionEvent actionEvent) {
+        clearUI();
+        alertLbl.setText("");
+        cancel.setVisible(false);
+        saveBtn.setText("SAVE");
     }
 }

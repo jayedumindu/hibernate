@@ -11,15 +11,13 @@ import DTOs.StudentDTO;
 import TDMs.CustomTDM;
 import TDMs.ReservationTDM;
 import TDMs.StudentTDM;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -74,16 +72,35 @@ public class RegistrationController {
 
     public Label regIdLbl;
 
+    public Pane stDetailsPane;
+    public Pane reservationDetailsPane;
+    public Label alertLbl;
+    public Button cancelBtn;
+    public JFXComboBox<String> studentCmb;
+    public JFXToggleButton studentToggle;
+    public Pane fromExistingStPane;
+    public JFXTabPane tabPane;
+    public Tab processTab;
+
     private ReservationBO reservationBO;
     private StudentBO studentBO;
     private RoomBO roomBO;
 
     private ObservableList<ReservationTDM> reservationList = FXCollections.observableArrayList();
     private ObservableList<String> roomList = FXCollections.observableArrayList();
+    private ObservableList<String> studentIdList = FXCollections.observableArrayList();
     private ObservableList<StudentTDM> studentList = FXCollections.observableArrayList();
     private ObservableList<CustomTDM> customList = FXCollections.observableArrayList();
 
     private Func STATUS;
+
+    public void cancelCurrentStatus(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        switch (STATUS){
+            case UPDATE_RESERVATION: clearUIForUpRes(); setRegId(); break;
+            case UPDATE_STUDENT: clearUIForUpSt(); break;
+        }
+        STATUS = Func.RESERVE; alertLbl.setText(""); cancelBtn.setVisible(false);
+    }
 
     private enum Func{
         UPDATE_STUDENT,UPDATE_RESERVATION,RESERVE
@@ -138,6 +155,7 @@ public class RegistrationController {
 
         roomTypeCombo.setItems(roomList);
         roomTypeAvlCmb.setItems(roomList);
+        studentCmb.setItems(studentIdList);
         loadRooms();
 
         // loading data for tables
@@ -148,13 +166,25 @@ public class RegistrationController {
         setRegId();
 
         STATUS = Func.RESERVE;
+
+        // toggle btn on action
+        studentToggle.setOnAction(e->{
+            if(studentToggle.isSelected()){
+                studentCmb.setDisable(false);
+                stDetailsPane.setDisable(true);
+            }else {
+                studentCmb.setDisable(true);
+                stDetailsPane.setDisable(false);
+            }
+                }
+        );
     }
 
     public void registerStudent(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         // check is it an update
         switch (STATUS){
             case RESERVE: saveReservation(); loadStudentsForKMCheck(); break;
-            case UPDATE_STUDENT : saveStudent(); break;
+            case UPDATE_STUDENT : saveStudent();break;
             case UPDATE_RESERVATION: updateReservation(); loadStudentsForKMCheck(); break;
         }
 
@@ -182,17 +212,36 @@ public class RegistrationController {
 
     // fillers
     public void updateRegistration(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        if(!STATUS.equals(Func.RESERVE)){
+            new Alert(Alert.AlertType.WARNING,"Please invoke the ongoing update before proceeding!").show();
+            return;
+        }
         ReservationTDM tdm = reservations.getSelectionModel().getSelectedItem();
         regIdLbl.setText(tdm.getResId());
         roomTypeCombo.getSelectionModel().select(tdm.getRoom());
+
         statusCmb.getSelectionModel().select(tdm.getStatus());
         if(tdm.isPaid()){
             paidRd.setSelected(true);
         }else payLaterRd.setSelected(true);
 
+        // select student
+        studentToggle.setSelected(true);
+        studentToggle.setDisable(true);
+        if(studentCmb.isDisable()){
+            studentCmb.setDisable(false);
+        }
+        studentCmb.getSelectionModel().select(tdm.getStudent());
         // change button value
         register.setText("Update Reservation");
         STATUS = Func.UPDATE_RESERVATION;
+
+        stDetailsPane.setDisable(true);
+        // warnings
+        alertLbl.setText("You're updating a reservation. Click cancel to invoke!");
+        cancelBtn.setVisible(true);
+
+        tabPane.getSelectionModel().select(processTab);
     }
 
     public void loadRoom(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
@@ -218,6 +267,10 @@ public class RegistrationController {
 
     // fillers
     public void updateStudent(ActionEvent actionEvent) {
+        if(!STATUS.equals(Func.RESERVE)){
+            new Alert(Alert.AlertType.WARNING,"Please invoke the ongoing update before proceeding!").show();
+            return;
+        }
         StudentTDM tdm = students.getSelectionModel().getSelectedItem();
         String[] fullName = tdm.getSName().split(" ");
         LocalDate dob = LocalDate.parse(tdm.getDOB());
@@ -228,10 +281,16 @@ public class RegistrationController {
         lNameTxt.setText(fullName[1]);
         pickDate.setValue(dob);
         genderCmb.getSelectionModel().select(tdm.getGender());
-
         // change btn value
         register.setText("Update Student");
+        // disable pane
+        reservationDetailsPane.setDisable(true);
+        // warnings
+        alertLbl.setText("You're updating a student. Click cancel to invoke!");
+        cancelBtn.setVisible(true);
+        fromExistingStPane.setDisable(true);
         STATUS = Func.UPDATE_STUDENT;
+        tabPane.getSelectionModel().select(processTab);
     }
 
     private void loadAllReservations() throws SQLException, ClassNotFoundException {
@@ -245,9 +304,11 @@ public class RegistrationController {
 
     private void loadAllStudents() throws SQLException, ClassNotFoundException {
         studentList.clear();
+        studentIdList.clear();
         ArrayList<StudentDTO> all = studentBO.getAll();
         for (StudentDTO dto:
                 all) {
+            studentIdList.add(dto.getSId());
             studentList.add(new StudentTDM(dto.getSId(), dto.getSName(), dto.getAddress(), dto.getContact(), dto.getDOB().toString(), dto.getGender()));
         }
     }
@@ -285,23 +346,28 @@ public class RegistrationController {
     private void saveReservation() throws SQLException, ClassNotFoundException {
         StudentDTO student = new StudentDTO();
         ReservationDTO reservation = new ReservationDTO();
-
-        // initializing student
-        student.setSId(stIdTxt.getText());
-        student.setSName(fNameTxt.getText() + " " + lNameTxt.getText());
-        student.setContact(contactTxt.getText());
-        student.setAddress(addressTxt.getText());
-        student.setDOB(pickDate.getValue());
-        student.setGender(genderCmb.getValue());
-        studentBO.save(student);
-
         // initializing room
         RoomDTO room = new RoomDTO();
         room.setRoomTypeId(roomTypeCombo.getValue());
 
+        if(studentToggle.isSelected()){
+            student.setSId(studentCmb.getValue());
+        }else {
+            // initializing student
+            student.setSId(stIdTxt.getText());
+            student.setSName(fNameTxt.getText() + " " + lNameTxt.getText());
+            student.setContact(contactTxt.getText());
+            student.setAddress(addressTxt.getText());
+            student.setDOB(pickDate.getValue());
+            student.setGender(genderCmb.getValue());
+            studentBO.save(student);
+
+            loadAllStudents();
+        }
+
         // initializing reservation
         reservation.setResId(regIdLbl.getText());
-        reservation.setStatus(statusCmb.getValue().toString());
+        reservation.setStatus(statusCmb.getValue());
         reservation.setPaid(paidRd.isArmed());
         reservation.setStudent(student);
         reservation.setRoom(room);
@@ -316,11 +382,9 @@ public class RegistrationController {
         clearUI();
 
         loadRooms();
-        loadAllStudents();
         loadAllReservations();
 
         setRegId();
-        System.out.println("END");
     }
 
     private void saveStudent() throws SQLException, ClassNotFoundException {
@@ -344,26 +408,43 @@ public class RegistrationController {
     }
 
     private void updateReservation() throws SQLException, ClassNotFoundException {
-        // ++ for prev room type
+        ReservationDTO reservationDTO = reservationBO.search(regIdLbl.getText());
+        if(!reservationDTO.getRoom().getRoomTypeId().equals(roomTypeCombo.getValue())){
+            // then qty++ for prev room type
+            RoomDTO room = roomBO.search(reservationDTO.getRoom().getRoomTypeId());
+            room.setQuantity(room.getQuantity()+1);
+            roomBO.update(room);
+            System.out.println("updated prev room qty");
+            // qty-- from new type
+            room = roomBO.search(roomTypeCombo.getValue());
+            room.setQuantity(room.getQuantity()-1);
+            roomBO.update(room);
+            System.out.println("updated new room qty");
+        }
 
         ReservationDTO reservation = new ReservationDTO();
         RoomDTO room = new RoomDTO();
+        StudentDTO st = new StudentDTO();
         room.setRoomTypeId(roomTypeCombo.getValue());
+        st.setSId(studentCmb.getValue());
         // initializing reservation
         reservation.setResId(regIdLbl.getText());
-        reservation.setStatus(statusCmb.getValue().toString());
+        reservation.setStatus(statusCmb.getValue());
         reservation.setPaid(paidRd.isArmed());
         reservation.setRoom(room);
+        reservation.setStudent(st);
         reservationBO.update(reservation);
 
         clearUIForUpRes();
         setRegId();
 
+        loadAllReservations();
+
         STATUS = Func.RESERVE;
     }
 
     private void clearUIForUpSt(){
-        register.setText("SAVE");
+        register.setText("Register");
         stIdTxt.clear();
         fNameTxt.clear();
         addressTxt.clear();
@@ -371,19 +452,37 @@ public class RegistrationController {
         lNameTxt.clear();
         pickDate.getEditor().clear();
         genderCmb.getSelectionModel().clearSelection();
+
+        // enable
+        reservationDetailsPane.setDisable(false);
+
+        // warnings
+        alertLbl.setText("");
+        cancelBtn.setVisible(false);
+        fromExistingStPane.setDisable(false);
     }
 
     private void clearUIForUpRes(){
-        register.setText("SAVE");
+        register.setText("Register");
         roomTypeCombo.getSelectionModel().clearSelection();
         statusCmb.getSelectionModel().clearSelection();
         keyMoneyLbl.setText("");
         descriptionLbl.setText("");
         paidRd.setSelected(true);
+        studentCmb.getSelectionModel().clearSelection();
+        studentToggle.setDisable(false);
+        studentToggle.setSelected(false);
+
+        // enable
+        stDetailsPane.setDisable(false);
+        studentCmb.setDisable(true);
+        // warnings
+        alertLbl.setText("");
+        cancelBtn.setVisible(false);
+        fromExistingStPane.setDisable(false);
     }
 
     private void clearUI(){
-        register.setText("SAVE");
         stIdTxt.clear();
         fNameTxt.clear();
         addressTxt.clear();
@@ -396,5 +495,6 @@ public class RegistrationController {
         keyMoneyLbl.setText("");
         descriptionLbl.setText("");
         paidRd.setSelected(true);
+        studentCmb.getSelectionModel().clearSelection();
     }
 }

@@ -36,12 +36,16 @@ public class ReservationDAOImpl implements ReservationDAO {
 
     @Override
     public void update(Reservation entity) throws SQLException, ClassNotFoundException {
-        session.update(entity);
+        Reservation res = session.get(Reservation.class,entity.getResId());
+        res.setPaid(entity.isPaid());
+        res.setStatus(entity.getStatus());
+        res.setStudent(entity.getStudent());
+        res.setRoom(entity.getRoom());
     }
 
     @Override
     public Reservation search(String s) throws SQLException, ClassNotFoundException {
-        return (Reservation) session.get(s,Reservation.class);
+        return session.get(Reservation.class,s);
     }
 
     @Override
