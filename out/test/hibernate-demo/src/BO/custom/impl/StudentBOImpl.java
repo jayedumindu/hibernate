@@ -134,7 +134,7 @@ public class StudentBOImpl implements StudentBO {
         }
         if (studentList != null) {
             for (Custom st : studentList) {
-                dtoS.add(new CustomDTO(st.getStudentId(),st.getSName(),st.getDueValue(),st.getRoomType(),st.getDescription()));
+                dtoS.add(new CustomDTO(st.getStudentId(),st.getSName(),st.getDueValue(),st.getRoomType(),st.getRegID()));
             }
         }
         // returns an empty arraylist if none found

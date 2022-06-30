@@ -28,11 +28,11 @@ public class Reservation {
     @NonNull
     private boolean paid;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "Student")
     private Student student;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "Room_Type")
     private Room room;
 

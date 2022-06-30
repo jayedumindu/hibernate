@@ -10,6 +10,8 @@ import util.FactoryConfiguration;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class StudentDAOImpl implements StudentDAO {
@@ -47,7 +49,7 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
     public Student search(String s) throws SQLException, ClassNotFoundException {
-        return (Student) session.get(s,Student.class);
+        return session.get(Student.class,s);
     }
 
     @Override
@@ -68,15 +70,24 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
     public ArrayList<Custom> loadStudentsWhoNeedToPayKM() {
+        System.out.println("start");
         ArrayList<Custom> customList = new ArrayList<>();
-        Query query = session.createQuery("select res.student.sId,res.student.stName,res.room.keyMoney,res.room.roomTypeId,res.room.type from Reservation AS res WHERE paid=:bool");
+       // Query query = session.createQuery("select res.student.sId,res.student.stName,res.room.keyMoney,res.room.roomTypeId,res.room.type from Reservation AS res WHERE paid=:bool");
+        Query query = session.createQuery("select st.sId,st.stName,room.keyMoney,room.roomTypeId,res.resId from Reservation AS res inner join res.student AS st inner join res.room as room WHERE res.paid=:bool");
         query.setParameter("bool",false);
-        for (Object o : query.list()) {
-            Object[] myResult = (Object[]) o;
-            System.out.println(myResult.toString());
-            customList.add(new Custom(myResult[0].toString(), myResult[1].toString(), (Double) myResult[3], myResult[4].toString(), myResult[5].toString()));
+        Iterator it = query.list().iterator();
+        while (it.hasNext()){
+            //it.next();
+            Object[] tuple = (Object[]) it.next();
+            String StudentId = (String) tuple[0];
+            String sName = (String) tuple[1];
+            double dueValue = (Double) tuple[2];
+            String roomType = (String) tuple[3];
+            String id = (String) tuple[4];
+            Custom entity = new Custom(StudentId,sName,dueValue,roomType,id);
+            System.out.println(entity);
+            customList.add(entity);
         }
-        System.out.println(customList.isEmpty());
         return customList;
     }
 }

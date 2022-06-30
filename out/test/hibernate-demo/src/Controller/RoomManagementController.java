@@ -39,6 +39,8 @@ public class RoomManagementController {
     public Label alertLbl;
     public Button cancel;
 
+    private SpinnerValueFactory<Integer> factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,100);
+
     private ObservableList<RoomTDM> roomList = FXCollections.observableArrayList();
 
     public RoomManagementController() throws IOException {
@@ -46,7 +48,6 @@ public class RoomManagementController {
     }
 
     public void initialize() throws SQLException, ClassNotFoundException {
-        SpinnerValueFactory<Integer> factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,100);
         factory.setValue(1);
         noOfRooms.setValueFactory(factory);
 
@@ -79,6 +80,7 @@ public class RoomManagementController {
         }
     }
 
+    // filler
     public void updateRoom(ActionEvent actionEvent) {
         RoomTDM selectedItem = availability.getSelectionModel().getSelectedItem();
         tabPane.getSelectionModel().select(addRoomTab);
@@ -86,7 +88,8 @@ public class RoomManagementController {
         roomId.setText(selectedItem.getRoomTypeId());
         roomType.setText(selectedItem.getType());
         keyMoney.setText(String.valueOf(selectedItem.getKeyMoney()));
-        noOfRooms.getValueFactory().setValue(selectedItem.getQuantity());
+
+        factory.setValue(selectedItem.getQuantity());
 
         saveBtn.setText("SAVE CHANGES");
 
@@ -99,14 +102,14 @@ public class RoomManagementController {
         room.setRoomTypeId(roomId.getText());
         room.setType(roomType.getText());
         room.setKeyMoney(Double.parseDouble(keyMoney.getText()));
-        room.setQuantity(noOfRooms.getValue());
+        room.setQuantity(noOfRooms.getValueFactory().getValue());
+        System.out.println(room.getQuantity());
         // check if user is updating a existing room
         if(roomBo.exist(room.getRoomTypeId())){
             // then update
             System.out.println("room exists..updating!");
             if(roomBo.update(room)){
                 new Alert(Alert.AlertType.INFORMATION,"updated!").show();
-                saveBtn.setText("SAVE");
                 alertLbl.setText("");
                 cancel.setVisible(false);
             }else {

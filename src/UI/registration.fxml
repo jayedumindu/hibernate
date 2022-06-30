@@ -110,10 +110,10 @@
                         <TableView fx:id="KMTbl" layoutX="52.0" layoutY="284.0" prefHeight="294.0" prefWidth="692.0">
                           <columns>
                             <TableColumn fx:id="KmSid" prefWidth="130.0" text="Student ID" />
-                            <TableColumn fx:id="KmName" prefWidth="126.0" text="Name" />
-                              <TableColumn fx:id="KmValue" prefWidth="126.0" text="Due Value" />
-                              <TableColumn fx:id="KmRoomType" prefWidth="126.0" text="Room Type" />
-                              <TableColumn fx:id="KmRoomDescription" prefWidth="183.0" text="Description" />
+                            <TableColumn fx:id="KmName" prefWidth="199.0" text="Name" />
+                              <TableColumn fx:id="KmValue" prefWidth="122.0" text="Due Value" />
+                              <TableColumn fx:id="KmRoomType" prefWidth="118.0" text="Room Type" />
+                              <TableColumn fx:id="KmRoomRegId" prefWidth="122.0" text="Registration" />
                           </columns>
                         </TableView>
                         <JFXButton layoutX="337.0" layoutY="604.0" onAction="#markStudentAsPaid" text="MARK AS PAID" />

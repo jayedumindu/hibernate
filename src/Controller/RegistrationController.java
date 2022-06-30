@@ -68,7 +68,7 @@ public class RegistrationController {
     public TableColumn<CustomTDM,String> KmName;
     public TableColumn<CustomTDM,Double> KmValue;
     public TableColumn<CustomTDM,String> KmRoomType;
-    public TableColumn<CustomTDM,String> KmRoomDescription;
+    public TableColumn<CustomTDM,String> KmRoomRegId;
 
     public Label regIdLbl;
 
@@ -130,7 +130,7 @@ public class RegistrationController {
         KmName.setCellValueFactory(new PropertyValueFactory<>("sName"));
         KmValue.setCellValueFactory(new PropertyValueFactory<>("dueValue"));
         KmRoomType.setCellValueFactory(new PropertyValueFactory<>("roomType"));
-        KmRoomDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        KmRoomRegId.setCellValueFactory(new PropertyValueFactory<>("regId"));
 
         reservationBO = (ReservationBO) BoFactory.getBoFactory().getBO(BoFactory.BOTypes.RESERVATION);
         studentBO = (StudentBO) BoFactory.getBoFactory().getBO(BoFactory.BOTypes.STUDENT);
@@ -326,17 +326,23 @@ public class RegistrationController {
     private void loadStudentsForKMCheck(){
         customList.clear();
         ArrayList<CustomDTO> all = studentBO.loadStudentsWhoNeedToPayKM();
+        System.out.println(all.isEmpty());
         for (CustomDTO dto:
                 all) {
-            System.out.println(dto);
-            customList.add(new CustomTDM(dto.getStudentId(),dto.getSName(),dto.getDueValue(),dto.getRoomType(),dto.getDescription()));
+            customList.add(new CustomTDM(dto.getStudentId(),dto.getSName(),dto.getDueValue(),dto.getRoomType(),dto.getRegId()));
         }
-        System.out.println("reached end");
     }
 
     public void markStudentAsPaid(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        String id = KMTbl.getSelectionModel().getSelectedItem().getStudentId();
-        studentBO.search(id).getReservations();
+        String id = KMTbl.getSelectionModel().getSelectedItem().getRegId();
+        ReservationDTO reservation = reservationBO.search(id);
+        reservation.setPaid(true);
+        if(reservationBO.update(reservation)){
+            // remove from table
+            customList.remove(KMTbl.getSelectionModel().getSelectedItem());
+            System.out.println("Updated as PAID");
+        }
+        loadAllReservations();
     }
 
     private void setRegId() throws SQLException, ClassNotFoundException {
