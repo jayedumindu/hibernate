@@ -4,8 +4,8 @@ import DAO.SuperDAO;
 import entity.Custom;
 import entity.Student;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public interface StudentDAO extends SuperDAO<Student,String> {
-    public List<Custom> loadStudentsWhoNeedToPayKM();
+    public ArrayList<Custom> loadStudentsWhoNeedToPayKM();
 }

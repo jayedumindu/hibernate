@@ -8,6 +8,7 @@ import util.FactoryConfiguration;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.List;
 
 public class ReservationDAOImpl implements ReservationDAO {
@@ -45,28 +46,30 @@ public class ReservationDAOImpl implements ReservationDAO {
 
     @Override
     public boolean exist(String s) throws SQLException, ClassNotFoundException {
-        return session.get(s, Reservation.class) == null;
+        return session.get(Reservation.class,s) != null;
     }
 
     @Override
     public void delete(String s) throws SQLException, ClassNotFoundException {
-        Reservation reservation = new Reservation();
-        reservation.setResId(s);
+        Reservation reservation = session.get(Reservation.class,s);
         session.delete(reservation);
     }
 
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
-        /*Query query = session. createQuery("SELECT Reservation.resId  FROM Reservation ORDER BY resId DESC");
+        Query query = session.createQuery("SELECT resId AS id FROM Reservation ORDER BY id DESC");
+        if(query.list()==null){
+            System.out.println("null query");
+        }
         query.setMaxResults(1);
-        if(query.uniqueResult()==null){
-            System.out.println("null");
+        Iterator it =  query.list().iterator();
+        if(it.hasNext()){
+            String id = (String) it.next();
+            int newCustomerId = Integer.parseInt(id.replace("RS-", "")) + 1;
+            return String.format("RS-%03d", newCustomerId);
+        }else {
             return "RS-001";
         }
-        String prevId = (String) query.uniqueResult();
-        String[] id = prevId.split("-");
-        return id[0] + (Integer.parseInt(id[1]) + 1);*/
-        return "RS-001";
     }
 
 }

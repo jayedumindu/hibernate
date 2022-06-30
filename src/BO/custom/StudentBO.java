@@ -4,8 +4,8 @@ import BO.SuperBO;
 import DTOs.CustomDTO;
 import DTOs.StudentDTO;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public interface StudentBO extends SuperBO<StudentDTO,String> {
-    public List<CustomDTO> loadStudentsWhoNeedToPayKM();
+    public ArrayList<CustomDTO> loadStudentsWhoNeedToPayKM();
 }

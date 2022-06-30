@@ -1,7 +1,7 @@
 package BO.custom;
 
 import BO.SuperBO;
-import entity.User;
+import DTOs.UserDTO;
 
-public interface UserBO extends SuperBO <User,String> {
+public interface UserBO extends SuperBO <UserDTO,String> {
 }

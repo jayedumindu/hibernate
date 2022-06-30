@@ -121,11 +121,11 @@ public class StudentBOImpl implements StudentBO {
     }
 
     @Override
-    public List<CustomDTO> loadStudentsWhoNeedToPayKM() {
+    public ArrayList<CustomDTO> loadStudentsWhoNeedToPayKM() {
         ArrayList<CustomDTO> dtoS = new ArrayList<>();
         transaction.begin();
         // tr handling
-        List<Custom> studentList = null;
+        ArrayList<Custom> studentList = null;
         try{
             studentList = studentDAO.loadStudentsWhoNeedToPayKM();
             transaction.commit();

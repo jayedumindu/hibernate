@@ -108,8 +108,6 @@ public class RoomBOImpl implements RoomBO {
             roomDAO.delete(s);
             transaction.commit();
         }catch (Exception e){
-            // exception
-            System.out.println("deletion rolled back");
             transaction.rollback();
         }
         return transaction.getStatus() == TransactionStatus.COMMITTED;

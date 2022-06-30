@@ -3,6 +3,7 @@ package DAO;
 import DAO.custom.impl.ReservationDAOImpl;
 import DAO.custom.impl.RoomDAOImpl;
 import DAO.custom.impl.StudentDAOImpl;
+import DAO.custom.impl.UserDAOImpl;
 
 import java.io.IOException;
 
@@ -20,7 +21,7 @@ public class DaoFactory {
     }
 
     public enum DAOTypes {
-        STUDENT,ROOM,RESERVATION
+        STUDENT,ROOM,RESERVATION,USER
     }
 
     public SuperDAO getDAO(DAOTypes types) throws IOException {
@@ -31,6 +32,8 @@ public class DaoFactory {
                 return new RoomDAOImpl();
             case RESERVATION:
                 return  new ReservationDAOImpl();
+            case USER:
+                return  new UserDAOImpl();
             default:
                 return null;
         }

@@ -23,15 +23,15 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <JFXTextField fx:id="stIdTxt" alignment="CENTER" layoutX="42.0" layoutY="61.0" promptText="Student U-ID" />
-                        <JFXTextField fx:id="fNameTxt" alignment="CENTER" layoutX="303.0" layoutY="61.0" promptText="fname" />
+                        <JFXTextField fx:id="stIdTxt" alignment="CENTER" layoutX="42.0" layoutY="77.0" promptText="Student U-ID" />
+                        <JFXTextField fx:id="fNameTxt" alignment="CENTER" layoutX="294.0" layoutY="77.0" promptText="fname" />
                         <JFXTextField fx:id="addressTxt" alignment="CENTER" layoutX="68.0" layoutY="261.0" prefHeight="31.0" prefWidth="667.0" promptText="Name" text="Address">
                            <font>
                               <Font name="System Italic" size="15.0" />
                            </font>
                         </JFXTextField>
                         <JFXTextField fx:id="contactTxt" alignment="CENTER" layoutX="42.0" layoutY="167.0" promptText="contact" />
-                        <JFXTextField fx:id="lNameTxt" alignment="CENTER" layoutX="540.0" layoutY="61.0" promptText="lname" />
+                        <JFXTextField fx:id="lNameTxt" alignment="CENTER" layoutX="541.0" layoutY="77.0" promptText="lname" />
                         <JFXDatePicker fx:id="pickDate" layoutX="505.0" layoutY="167.0" />
                         <JFXComboBox fx:id="roomTypeCombo" layoutX="82.0" layoutY="376.0" onAction="#loadRoom" promptText="Room Type" />
                         <JFXButton fx:id="register" buttonType="RAISED" layoutX="365.0" layoutY="563.0" onAction="#registerStudent" text="Register" />
@@ -56,6 +56,11 @@
                         </Label>
                         <JFXComboBox fx:id="genderCmb" layoutX="314.0" layoutY="167.0" promptText="Gender" />
                         <JFXComboBox fx:id="statusCmb" layoutX="294.0" layoutY="483.0" prefHeight="31.0" prefWidth="188.0" promptText="Status" />
+                        <Label fx:id="regIdLbl" layoutX="674.0" layoutY="14.0" text="XXXXXX" textFill="#b93d3d">
+                           <font>
+                              <Font name="System Bold" size="26.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
               </content>

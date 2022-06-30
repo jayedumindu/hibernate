@@ -35,26 +35,27 @@ public class RoomDAOImpl implements RoomDAO {
 
     @Override
     public void update(Room entity) throws SQLException, ClassNotFoundException {
-        session.update(entity);
+        Room room = session.get(Room.class,entity.getRoomTypeId());
+        room.setKeyMoney(entity.getKeyMoney());
+        room.setQuantity(entity.getQuantity());
+        room.setType(room.getType());
     }
 
     @Override
     public Room search(String s) throws SQLException, ClassNotFoundException {
         Query query = session.createQuery("FROM Room AS r WHERE r.roomTypeId = :code");
         query.setParameter("code",s);
-        return (Room) query.list();
+        return (Room) query.uniqueResult();
     }
 
     @Override
     public boolean exist(String s) throws SQLException, ClassNotFoundException {
-        // exception
-        return session.get(s, Room.class) != null;
+        return session.get(Room.class,s) != null;
     }
 
     @Override
     public void delete(String s) throws SQLException, ClassNotFoundException {
-        Room room = new Room();
-        room.setRoomTypeId(s);
+        Room room = session.load(Room.class,s);
         session.remove(room);
     }
 

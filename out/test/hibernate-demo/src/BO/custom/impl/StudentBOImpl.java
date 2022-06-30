@@ -3,7 +3,9 @@ package BO.custom.impl;
 import BO.custom.StudentBO;
 import DAO.DaoFactory;
 import DAO.custom.StudentDAO;
+import DTOs.CustomDTO;
 import DTOs.StudentDTO;
+import entity.Custom;
 import entity.Student;
 import org.hibernate.Transaction;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
@@ -37,7 +39,7 @@ public class StudentBOImpl implements StudentBO {
         }
         if (roomList != null) {
             for (Student st : roomList) {
-                dtoS.add(new StudentDTO(st.getSId(),st.getAddress(),st.getContact(),st.getDOB(),st.getGender()));
+                dtoS.add(new StudentDTO(st.getSId(),st.getStName(),st.getAddress(),st.getContact(),st.getDOB(),st.getGender()));
             }
         }
         // returns an empty arraylist if none found
@@ -46,7 +48,7 @@ public class StudentBOImpl implements StudentBO {
 
     @Override
     public boolean save(StudentDTO dto) throws SQLException, ClassNotFoundException {
-        Student student = new Student(dto.getSId(),dto.getAddress(),dto.getContact(),dto.getDOB(),dto.getGender());
+        Student student = new Student(dto.getSId(),dto.getSName(),dto.getAddress(),dto.getContact(),dto.getDOB(),dto.getGender());
         transaction.begin();
         try{
             studentDAO.save(student);
@@ -59,7 +61,7 @@ public class StudentBOImpl implements StudentBO {
 
     @Override
     public boolean update(StudentDTO dto) throws SQLException, ClassNotFoundException {
-        Student student = new Student(dto.getSId(),dto.getAddress(),dto.getContact(),dto.getDOB(),dto.getGender());
+        Student student = new Student(dto.getSId(),dto.getSName(),dto.getAddress(),dto.getContact(),dto.getDOB(),dto.getGender());
         transaction.begin();
         try{
             studentDAO.update(student);
@@ -82,7 +84,7 @@ public class StudentBOImpl implements StudentBO {
         }
         if(transaction.getStatus() == TransactionStatus.COMMITTED){
             if (student != null) {
-                return new StudentDTO(student.getSId(),student.getAddress(),student.getContact(),student.getDOB(),student.getGender());
+                return new StudentDTO(student.getSId(),student.getStName(),student.getAddress(),student.getContact(),student.getDOB(),student.getGender());
             }
         }
         return null;
@@ -116,5 +118,26 @@ public class StudentBOImpl implements StudentBO {
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
         return null;
+    }
+
+    @Override
+    public ArrayList<CustomDTO> loadStudentsWhoNeedToPayKM() {
+        ArrayList<CustomDTO> dtoS = new ArrayList<>();
+        transaction.begin();
+        // tr handling
+        ArrayList<Custom> studentList = null;
+        try{
+            studentList = studentDAO.loadStudentsWhoNeedToPayKM();
+            transaction.commit();
+        }catch (Exception e){
+            transaction.rollback();
+        }
+        if (studentList != null) {
+            for (Custom st : studentList) {
+                dtoS.add(new CustomDTO(st.getStudentId(),st.getSName(),st.getDueValue(),st.getRoomType(),st.getDescription()));
+            }
+        }
+        // returns an empty arraylist if none found
+        return dtoS;
     }
 }

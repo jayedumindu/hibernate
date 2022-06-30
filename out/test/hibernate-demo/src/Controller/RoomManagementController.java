@@ -98,7 +98,7 @@ public class RoomManagementController {
         // check if user is updating a existing room
         if(roomBo.exist(room.getRoomTypeId())){
             // then update
-            System.out.println("room exists");
+            System.out.println("room exists..updating!");
             if(roomBo.update(room)){
                 new Alert(Alert.AlertType.INFORMATION,"updated!").show();
                 saveBtn.setText("SAVE");
