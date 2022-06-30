@@ -70,7 +70,6 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
     public ArrayList<Custom> loadStudentsWhoNeedToPayKM() {
-        System.out.println("start");
         ArrayList<Custom> customList = new ArrayList<>();
        // Query query = session.createQuery("select res.student.sId,res.student.stName,res.room.keyMoney,res.room.roomTypeId,res.room.type from Reservation AS res WHERE paid=:bool");
         Query query = session.createQuery("select st.sId,st.stName,room.keyMoney,room.roomTypeId,res.resId from Reservation AS res inner join res.student AS st inner join res.room as room WHERE res.paid=:bool");

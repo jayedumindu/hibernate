@@ -61,6 +61,18 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </AnchorPane>
-      <AnchorPane fx:id="loader" layoutX="200.0" prefHeight="700.0" prefWidth="800.0" />
+      <AnchorPane fx:id="loader" layoutX="200.0" prefHeight="700.0" prefWidth="800.0" style="-fx-background-color: #eddedd;">
+         <children>
+            <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="300.0" layoutY="228.0">
+               <image>
+                  <Image url="@etc/logo_transparent.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="297.0" layoutY="407.0" text="Select an Option to Continue....">
+               <font>
+                  <Font name="Javanese Text" size="15.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
    </children>
 </AnchorPane>

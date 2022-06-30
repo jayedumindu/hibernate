@@ -13,6 +13,8 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -25,6 +27,11 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
+                        <ImageView fitHeight="274.0" fitWidth="750.0" layoutX="27.0" layoutY="7.0" opacity="0.39">
+                           <image>
+                              <Image url="@etc/facebook_cover_photo_1.png" />
+                           </image>
+                        </ImageView>
                         <Pane fx:id="fromExistingStPane" layoutX="27.0" layoutY="271.0" prefHeight="55.0" prefWidth="743.0">
                            <children>
                               <JFXToggleButton fx:id="studentToggle" layoutX="6.0" layoutY="10.0" prefHeight="35.0" prefWidth="197.0" size="5.0" text="From existing student" />
@@ -64,7 +71,7 @@
                               </Label>
                            </children>
                         </Pane>
-                        <JFXButton fx:id="register" alignment="CENTER" buttonType="RAISED" defaultButton="true" layoutX="251.0" layoutY="537.0" onAction="#registerStudent" prefHeight="31.0" prefWidth="215.0" text="Register" />
+                        <JFXButton fx:id="register" alignment="CENTER" buttonType="RAISED" defaultButton="true" layoutX="291.0" layoutY="541.0" onAction="#registerStudent" prefHeight="31.0" prefWidth="215.0" text="Register" />
                         <Separator layoutX="5.0" layoutY="329.0" prefHeight="12.0" prefWidth="786.0" />
                         <Label fx:id="descriptionLbl" alignment="CENTER" layoutX="231.0" layoutY="381.0" prefHeight="21.0" prefWidth="127.0">
                            <font>

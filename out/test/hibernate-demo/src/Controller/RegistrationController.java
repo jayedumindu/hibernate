@@ -326,7 +326,6 @@ public class RegistrationController {
     private void loadStudentsForKMCheck(){
         customList.clear();
         ArrayList<CustomDTO> all = studentBO.loadStudentsWhoNeedToPayKM();
-        System.out.println(all.isEmpty());
         for (CustomDTO dto:
                 all) {
             customList.add(new CustomTDM(dto.getStudentId(),dto.getSName(),dto.getDueValue(),dto.getRoomType(),dto.getRegId()));
