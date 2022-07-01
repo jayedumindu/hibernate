@@ -7,9 +7,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -30,19 +34,34 @@ public class SignUpController {
     }
 
     public void signup(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        UserDTO dto = new UserDTO();
-        if(pwd.getText().equalsIgnoreCase(pwdAgain.getText())){
-            dto.setPassword(pwd.getText());
-            dto.setUsername(username.getText());
-        }
-        userBO.save(dto);
-        clearUI();
+        if(username.getText().length()>=3 & pwd.getText().length()>=8) {
+            UserDTO dto = new UserDTO();
+            if (pwd.getText().equalsIgnoreCase(pwdAgain.getText())) {
+                dto.setPassword(pwd.getText());
+                dto.setUsername(username.getText());
+            }
+            userBO.save(dto);
+            clearUI();
+        }else new Alert(Alert.AlertType.WARNING,"Please check the credential length!").show();
     }
 
     public void animateWhenEntered(MouseEvent event) {
+        if(event.getSource() instanceof Text){
+            Text txt = (Text) event.getSource();
+            DropShadow glow = new DropShadow();
+            glow.setColor(Color.ORANGERED);
+            glow.setWidth(20);
+            glow.setHeight(20);
+            glow.setRadius(20);
+            txt.setEffect(glow);
+        }
     }
 
     public void animateWhenExited(MouseEvent event) {
+        if(event.getSource() instanceof Text){
+            Text txt = (Text) event.getSource();
+            txt.setEffect(null);
+        }
     }
 
     public void backToDashboard(MouseEvent event) throws IOException {

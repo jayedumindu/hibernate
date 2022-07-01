@@ -11,7 +11,7 @@
    <children>
       <TextField fx:id="username" layoutX="122.0" layoutY="214.0" prefHeight="31.0" prefWidth="285.0" promptText="username" />
       <TextField fx:id="pwd" layoutX="122.0" layoutY="279.0" prefHeight="31.0" prefWidth="285.0" promptText="password" />
-      <TextField fx:id="pwdAgain" layoutX="122.0" layoutY="350.0" prefHeight="31.0" prefWidth="285.0" promptText="password (confirm)" />
+      <TextField fx:id="pwdAgain" layoutX="122.0" layoutY="370.0" prefHeight="31.0" prefWidth="285.0" promptText="password (confirm)" />
       <JFXButton layoutX="232.0" layoutY="494.0" onAction="#signup" text="Sign Up" />
       <Text fill="#a18888" layoutX="29.0" layoutY="41.0" onMouseEntered="#animateWhenEntered" onMouseExited="#animateWhenExited" onMouseReleased="#backToDashboard" strokeType="OUTSIDE" strokeWidth="0.0" text="Back" underline="true">
          <font>
@@ -20,6 +20,16 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
+      </Text>
+      <Text layoutX="126.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="username must be more than 3 characters*" wrappingWidth="285.0000114440918">
+         <font>
+            <Font name="System Bold Italic" size="10.0" />
+         </font>
+      </Text>
+      <Text layoutX="126.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="password must be more than 8 characters including special characters*" wrappingWidth="285.0000114440918">
+         <font>
+            <Font name="System Bold Italic" size="10.0" />
+         </font>
       </Text>
    </children>
 </AnchorPane>
