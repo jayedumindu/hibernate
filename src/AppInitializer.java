@@ -18,7 +18,7 @@ public class AppInitializer extends Application {
         Parent root = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("./UI/dashboard.fxml")));
         Scene mainScene = new Scene(root);
         primaryStage.setScene(mainScene);
-        primaryStage.setTitle("NewEye Student-Management");
+        primaryStage.setTitle("eSchool - Student Management System");
         primaryStage.centerOnScreen();
         primaryStage.show();
     }
