@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
@@ -102,6 +103,30 @@ public class RegistrationController {
         STATUS = Func.RESERVE; alertLbl.setText(""); cancelBtn.setVisible(false);
     }
 
+    public void validate(KeyEvent keyEvent) {
+        switch (STATUS) {
+            case RESERVE: validateRegistration(); break;
+            case UPDATE_RESERVATION: validateUpRes(); break;
+            case UPDATE_STUDENT: validateUpStudent(); break;
+        }
+    }
+
+    public void validateWhenPicked(ActionEvent actionEvent) {
+        switch (STATUS) {
+            case RESERVE: validateRegistration(); break;
+            case UPDATE_RESERVATION: validateUpRes(); break;
+            case UPDATE_STUDENT: validateUpStudent(); break;
+        }
+    }
+
+    public void validateWhenSelected(ActionEvent actionEvent) {
+        switch (STATUS) {
+            case RESERVE: validateRegistration(); break;
+            case UPDATE_RESERVATION: validateUpRes(); break;
+            case UPDATE_STUDENT: validateUpStudent(); break;
+        }
+    }
+
     private enum Func{
         UPDATE_STUDENT,UPDATE_RESERVATION,RESERVE
     }
@@ -176,6 +201,7 @@ public class RegistrationController {
                 studentCmb.setDisable(true);
                 stDetailsPane.setDisable(false);
             }
+            validateRegistration();
                 }
         );
     }
@@ -242,6 +268,7 @@ public class RegistrationController {
         cancelBtn.setVisible(true);
 
         tabPane.getSelectionModel().select(processTab);
+        validateUpRes();
     }
 
     public void loadRoom(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
@@ -250,6 +277,7 @@ public class RegistrationController {
             descriptionLbl.setText(roomDTO.getType());
             keyMoneyLbl.setText(String.valueOf(roomDTO.getKeyMoney()));
         }
+        validateRegistration();
     }
 
     public void removeStudent(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
@@ -291,6 +319,7 @@ public class RegistrationController {
         fromExistingStPane.setDisable(true);
         STATUS = Func.UPDATE_STUDENT;
         tabPane.getSelectionModel().select(processTab);
+        validateUpStudent();
     }
 
     private void loadAllReservations() throws SQLException, ClassNotFoundException {
@@ -501,5 +530,98 @@ public class RegistrationController {
         descriptionLbl.setText("");
         paidRd.setSelected(true);
         studentCmb.getSelectionModel().clearSelection();
+    }
+
+    private void validateRegistration(){
+
+        boolean isValidated = true;
+
+        if(!studentToggle.isSelected()) {
+            if (!addressTxt.getText().matches(".{4,}")) {
+                isValidated = false;
+            }
+            if (!lNameTxt.getText().matches("[A-Za-z ]+")) {
+                isValidated = false;
+            }
+            if (!fName.getText().matches("[A-Za-z ]+")) {
+                isValidated = false;
+            }
+            // check from here
+            if (!stIdTxt.getText().matches("S-\\d{3}")) {
+                isValidated = false;
+            }
+            if (!contactTxt.getText().matches("\\d{10}")) {
+                isValidated = false;
+            }
+            if (pickDate.getValue()==null) {
+                isValidated = false;
+            }
+            if (genderCmb.getSelectionModel().getSelectedIndex() == -1) {
+                isValidated = false;
+            }
+            if (roomTypeCombo.getSelectionModel().getSelectedIndex() == -1) {
+                isValidated = false;
+            }
+            if (statusCmb.getSelectionModel().getSelectedIndex() == -1) {
+                isValidated = false;
+            }
+        }else {
+            if (roomTypeCombo.getSelectionModel().getSelectedIndex() == -1) {
+                isValidated = false;
+            }
+            if (statusCmb.getSelectionModel().getSelectedIndex() == -1) {
+                isValidated = false;
+            }
+            if (studentCmb.getSelectionModel().getSelectedIndex() == -1){
+                isValidated = false;
+            }
+        }
+
+        register.setDisable(!isValidated);
+
+    }
+
+    private void validateUpStudent(){
+        boolean isValidated = true;
+
+        if (!addressTxt.getText().matches(".{4,}")) {
+            isValidated = false;
+        }
+        if (!lNameTxt.getText().matches("[A-Za-z ]+")) {
+            isValidated = false;
+        }
+        if (!fName.getText().matches("[A-Za-z ]+")) {
+            isValidated = false;
+        }
+        // check from here
+        if (!stIdTxt.getText().matches("S-\\d{3}")) {
+            isValidated = false;
+        }
+        if (!contactTxt.getText().matches("\\d{10}")) {
+            isValidated = false;
+        }
+        if (pickDate.getValue()==null) {
+            isValidated = false;
+        }
+        if (genderCmb.getSelectionModel().getSelectedIndex() == -1) {
+            isValidated = false;
+        }
+
+        register.setDisable(!isValidated);
+    }
+
+    private void validateUpRes(){
+
+        boolean isValidated = true;
+
+        if (roomTypeCombo.getSelectionModel().getSelectedIndex() == -1) {
+            isValidated = false;
+        }
+        if (statusCmb.getSelectionModel().getSelectedIndex() == -1) {
+            isValidated = false;
+        }
+        if (studentCmb.getSelectionModel().getSelectedIndex() == -1){
+            isValidated = false;
+        }
     }
 }
